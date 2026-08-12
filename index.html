@@ -175,7 +175,8 @@
   .accordion .entries{ margin:0 0 1.1rem; }
   .accordion .entries li{ padding:0.55rem 0; border-top:0; }
   .accordion .entries li:last-child{ border-bottom:0; }
-  .accordion .empty{ margin:0 0 1.2rem; color:var(--ink-soft); font-size:0.96em; }
+  .empty{ margin:0.7rem 0 0; color:var(--ink-soft); font-size:0.96em; }
+  .accordion .empty{ margin:0 0 1.2rem; }
 
   .subhead{
     font-family:"JetBrains Mono", ui-monospace, monospace;
@@ -206,6 +207,18 @@
   .accordion .accordion details:first-of-type{ border-top:0; }
   .accordion .accordion details:last-of-type{ border-bottom:0; }
   .accordion .accordion summary{ font-size:1rem; padding:0.85rem 0; }
+
+  /* lista de eventos: el título ocupa su línea y los datos van debajo */
+  .events{ list-style:none; margin:0.7rem 0 0; padding:0; }
+  .events li + li{ margin-top:1.05rem; }
+  .events .when{
+    display:block;
+    margin-top:0.2rem;
+    font-family:"JetBrains Mono", ui-monospace, monospace;
+    font-size:0.63rem; letter-spacing:0.1em; text-transform:uppercase;
+    color:var(--ink-soft);
+  }
+  .accordion .events{ margin-bottom:1.3rem; }
 
   .files{ list-style:none; margin:0 0 1.3rem; padding:0; }
   .files li{
@@ -302,19 +315,16 @@
 
         <!-- ✏️ One <li> per event: name linked to its page, dates on the right. -->
         <h3 class="subhead">Upcoming</h3>
-        <ul class="files">
-          <li><a class="link" href="https://example.org/event">[Event or conference name]</a><span class="when">[place] · [dates]</span></li>
-          <li><a class="link" href="https://sites.google.com/view/european-kylerec/home?authuser=0">[European Kylerec - Kuranishi structures and applications to contact topology]</a><span class="when">[Heidesee] · [March 29th - April 4th, 2026]</span></li>
-        </ul>
+        <p class="empty">Nothing coming up at the moment.</p>
 
         <!-- ✏️ Everything past stays folded away. -->
         <div class="accordion">
           <details>
             <summary>Past events</summary>
-            <ul class="files">
-              <li><a class="link" href="https://springschoolhomotopy-fabiogironella.apps.math.cnrs.fr">[Spring school - Khovanov and Floer homotopy]</a><span class="when">[Nantes] · [May 18th - May 22th, 2026]</span></li>
-              <li><a class="link" href="https://sites.google.com/view/european-kylerec/home?authuser=0">[European Kylerec - Kuranishi structures and applications to contact topology]</a><span class="when">[Heidesee] · [March 29th - April 4th, 2026]</span></li>
-              <li><a class="link" href="https://www.dpmms.cam.ac.uk/floer-theory-beyond-floer-march-2026">[Floer theory beyond Floer]</a><span class="when">[Cambridge] · [March 23th - March 27th, 2026]</span></li>
+            <ul class="events">
+              <li><a class="link" href="https://springschoolhomotopy-fabiogironella.apps.math.cnrs.fr">Spring school - Khovanov and Floer homotopy</a><span class="when">Nantes, France · May 2026</span></li>
+              <li><a class="link" href="https://sites.google.com/view/european-kylerec/home?authuser=0">European Kylerec - Kuranishi structures and applications to contact topology</a><span class="when">Heidesee, Germany · March 2026</span></li>
+              <li><a class="link" href="https://www.dpmms.cam.ac.uk/floer-theory-beyond-floer-march-2026">Floer theory beyond Floer</a><span class="when">Cambridge, UK · March 2026</span></li>
             </ul>
           </details>
         </div>
