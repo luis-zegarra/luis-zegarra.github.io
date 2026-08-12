@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Luis Zegarra — Symplectic topology</title>
+<meta name="description" content="Luis Zegarra, PhD student in symplectic topology at Sorbonne Université (IMJ-PRG).">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,300..700,0..100,0..1&family=JetBrains+Mono:wght@400;500&family=Spectral:ital,wght@0,300;0,400;0,600;1,300&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --paper:      #e8e4dc;
+    --paper-lift: #f2efe9;
+    --rule:       #cfc9be;
+    --ink:        #292a2e;
+    --ink-soft:   #63626b;
+    --indigo:     #3f4e77;
+    --indigo-pale:#a3abc0;
+
+    --measure: 34rem;
+    --gap: clamp(4rem, 9vw, 7.5rem);
+  }
+
+  *,*::before,*::after{ box-sizing:border-box; }
+  html{ -webkit-text-size-adjust:100%; }
+
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Spectral", Georgia, serif;
+    font-weight:300;
+    font-size:clamp(1.02rem, 0.55vw + 0.92rem, 1.14rem);
+    line-height:1.85;
+    letter-spacing:0.004em;
+  }
+
+  .page{ max-width:60rem; margin:0 auto; padding:0 clamp(1.25rem,5vw,3.5rem) 6rem; }
+
+  /* ---------- type ---------- */
+  h1,h2{
+    font-family:"Fraunces", Georgia, serif;
+    font-variation-settings:"SOFT" 45, "WONK" 1;
+    font-weight:500;
+    letter-spacing:-0.015em;
+    line-height:1.08;
+    margin:0;
+  }
+  h1{ font-size:clamp(2.9rem, 8vw, 4.6rem); }
+  h2{ font-size:clamp(1.5rem, 3vw, 1.85rem); margin-bottom:0.9rem; }
+  h3{
+    font-family:"Spectral", Georgia, serif;
+    font-weight:600; font-size:1.02rem;
+    margin:0 0 0.15rem;
+  }
+  p{ margin:0 0 1.15rem; }
+  p:last-child{ margin-bottom:0; }
+
+  .mono{
+    font-family:"JetBrains Mono", ui-monospace, monospace;
+    font-size:0.66rem; font-weight:500;
+    text-transform:uppercase; letter-spacing:0.19em;
+    color:var(--ink-soft);
+  }
+
+  a{ color:inherit; text-decoration:none; }
+  .prose a, .link{
+    color:var(--indigo);
+    text-decoration:underline;
+    text-decoration-thickness:1px;
+    text-underline-offset:0.22em;
+    text-decoration-color:var(--indigo-pale);
+    transition:text-decoration-color .25s ease;
+  }
+  .prose a:hover, .link:hover{ text-decoration-color:var(--indigo); }
+  :focus-visible{ outline:2px solid var(--indigo); outline-offset:3px; border-radius:2px; }
+
+  /* ---------- header ---------- */
+  .hero{
+    padding:clamp(3.5rem,9vh,5.5rem) 0 clamp(3.5rem,7vh,5rem);
+    border-bottom:1px solid var(--rule);
+    display:grid;
+    grid-template-columns:1fr;
+    gap:2rem;
+    align-items:start;
+  }
+  .hero .mono{ display:block; margin-bottom:1.4rem; }
+
+  .portrait{
+    width:min(11rem, 45%);
+    aspect-ratio:4/5;
+    object-fit:cover;
+    border:1px solid var(--rule);
+    border-radius:3px;
+    display:block;
+  }
+
+  @media (min-width:44rem){
+    .hero{ grid-template-columns:minmax(0,1fr) 13rem; gap:0 3rem; }
+    .portrait{ width:13rem; margin-top:0.6rem; }
+  }
+  .lede{ max-width:28rem; margin-top:1.5rem; font-size:1.16em; color:var(--ink-soft); }
+  .lede strong{ font-weight:400; color:var(--ink); }
+
+  .quick{
+    list-style:none; margin:2.4rem 0 0; padding:0;
+    display:flex; flex-wrap:wrap; gap:0.55rem 1.5rem;
+    font-family:"JetBrains Mono", ui-monospace, monospace;
+    font-size:0.72rem; letter-spacing:0.09em; text-transform:uppercase;
+  }
+  .quick a{
+    color:var(--ink-soft);
+    border-bottom:1px solid var(--rule);
+    padding-bottom:2px;
+    transition:color .22s ease, border-color .22s ease;
+  }
+  .quick a:hover{ color:var(--indigo); border-color:var(--indigo); }
+
+  /* ---------- sections ---------- */
+  section{ display:grid; grid-template-columns:1fr; gap:0.9rem; padding-top:var(--gap); }
+  section > .mono{ padding-top:0.55rem; }
+  .body{ max-width:var(--measure); }
+  .prose > * + h3{ margin-top:1.9rem; }
+  .note{ max-width:30rem; color:var(--ink-soft); }
+
+  @media (min-width:56rem){
+    section{ grid-template-columns:8.5rem minmax(0,1fr); gap:0 3.5rem; }
+    section > .mono{ text-align:right; }
+  }
+
+  .entries{ list-style:none; margin:0; padding:0; }
+  .entries li{ padding:1.15rem 0; border-top:1px solid var(--rule); }
+  .entries li:last-child{ border-bottom:1px solid var(--rule); }
+  .entries .meta{
+    display:block; margin-top:0.3rem;
+    font-family:"JetBrains Mono", ui-monospace, monospace;
+    font-size:0.66rem; letter-spacing:0.13em; text-transform:uppercase;
+    color:var(--ink-soft);
+  }
+  .entries p{ margin:0.35rem 0 0; color:var(--ink-soft); font-size:0.96em; }
+
+  /* ---------- collapsible groups ---------- */
+  .accordion{ margin-top:1.9rem; max-width:var(--measure); }
+  .accordion details{ border-top:1px solid var(--rule); }
+  .accordion details:last-of-type{ border-bottom:1px solid var(--rule); }
+
+  .accordion summary{
+    display:flex; align-items:baseline; justify-content:space-between; gap:1.2rem;
+    padding:1.1rem 0;
+    cursor:pointer;
+    list-style:none;
+    font-family:"Fraunces", Georgia, serif;
+    font-variation-settings:"SOFT" 45, "WONK" 1;
+    font-weight:500; font-size:1.12rem; line-height:1.3;
+    letter-spacing:-0.01em;
+    transition:color .2s ease;
+  }
+  .accordion summary::-webkit-details-marker{ display:none; }
+  .accordion summary:hover{ color:var(--indigo); }
+  .accordion summary::after{
+    content:"+";
+    flex:none;
+    font-family:"JetBrains Mono", ui-monospace, monospace;
+    font-size:0.95rem; font-weight:400;
+    color:var(--indigo-pale);
+    transition:color .2s ease;
+  }
+  .accordion details[open] > summary{ color:var(--ink); }
+  .accordion details[open] > summary::after{ content:"–"; color:var(--indigo); }
+
+  .accordion .entries{ margin:0 0 1.1rem; }
+  .accordion .entries li{ padding:0.55rem 0; border-top:0; }
+  .accordion .entries li:last-child{ border-bottom:0; }
+  .accordion .empty{ margin:0 0 1.2rem; color:var(--ink-soft); font-size:0.96em; }
+
+  .subhead{
+    font-family:"JetBrains Mono", ui-monospace, monospace;
+    font-size:0.66rem; font-weight:500;
+    text-transform:uppercase; letter-spacing:0.19em;
+    color:var(--ink-soft);
+    margin:2.3rem 0 0;
+  }
+  .subhead:first-of-type{ margin-top:1.6rem; }
+  .subhead + .files{ margin-top:0.7rem; }
+  .subhead + .accordion{ margin-top:0.5rem; }
+
+  .term{
+    display:block;
+    font-family:"JetBrains Mono", ui-monospace, monospace;
+    font-size:0.63rem; font-weight:400;
+    text-transform:uppercase; letter-spacing:0.14em;
+    color:var(--ink-soft);
+    margin-top:0.35rem;
+  }
+
+  /* un grupo dentro de otro (por ejemplo: Past > cada curso) */
+  .accordion .accordion{
+    margin:0 0 1.2rem;
+    padding-left:1.15rem;
+    border-left:1px solid var(--rule);
+  }
+  .accordion .accordion details:first-of-type{ border-top:0; }
+  .accordion .accordion details:last-of-type{ border-bottom:0; }
+  .accordion .accordion summary{ font-size:1rem; padding:0.85rem 0; }
+
+  .files{ list-style:none; margin:0 0 1.3rem; padding:0; }
+  .files li{
+    display:flex; align-items:baseline; justify-content:space-between; gap:1.2rem;
+    padding:0.32rem 0;
+    font-size:0.98em;
+  }
+  .files .when{
+    flex:none;
+    font-family:"JetBrains Mono", ui-monospace, monospace;
+    font-size:0.63rem; letter-spacing:0.13em; text-transform:uppercase;
+    color:var(--ink-soft);
+  }
+
+  .card{
+    background:var(--paper-lift);
+    border:1px solid var(--rule);
+    border-radius:3px;
+    padding:1.75rem 1.9rem;
+    max-width:var(--measure);
+  }
+  .card dl{ margin:0; display:grid; grid-template-columns:auto 1fr; gap:0.45rem 1.4rem; align-items:baseline; }
+  .card dt{
+    font-family:"JetBrains Mono", ui-monospace, monospace;
+    font-size:0.63rem; letter-spacing:.16em; text-transform:uppercase; color:var(--ink-soft);
+  }
+  .card dd{ margin:0; }
+
+  footer{
+    margin-top:var(--gap);
+    padding-top:1.5rem;
+    border-top:1px solid var(--rule);
+    color:var(--ink-soft);
+    font-family:"JetBrains Mono", ui-monospace, monospace;
+    font-size:0.66rem; letter-spacing:0.13em; text-transform:uppercase;
+    display:flex; flex-wrap:wrap; gap:0.5rem 1.5rem; justify-content:space-between;
+  }
+
+  @media (prefers-reduced-motion:reduce){ *{ transition:none !important; } }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header class="hero">
+   <div>
+    <span class="mono">Sorbonne Université · IMJ-PRG</span>
+    <h1>Luis Zegarra</h1>
+    <!-- ✏️ Two sentences about yourself. -->
+    <p class="lede">
+      PhD student in <strong>symplectic topology</strong>, advised by Russel Avdek.
+      I am interested in contact geometry, pseudoholomorphic curves, and anything
+      that can be drawn on a blackboard.
+    </p>
+
+    <!-- ✏️ Links — change or delete. -->
+    <ul class="quick">
+      <li><a href="mailto:your.address@example.fr">Email</a></li>
+      <li><a href="cv.pdf">CV</a></li>
+      <li><a href="https://arxiv.org/a/your-identifier">arXiv</a></li>
+      <li><a href="https://github.com/your-username">GitHub</a></li>
+    </ul>
+   </div>
+
+    <!-- ✏️ Your photo. Keep it in the same folder as this file. -->
+    <img class="portrait" src="photo.jpg" width="560" height="700"
+         alt="Luis Zegarra">
+  </header>
+
+  <main>
+
+    <section id="research">
+      <span class="mono">Research</span>
+      <div class="body prose">
+        <h2>What I work on</h2>
+        <!-- ✏️ One honest paragraph: the questions you are actually working on. -->
+        <p>
+          My thesis is about <em>[the central question, in one sentence]</em>. The
+          point is to understand how <em>[the phenomenon]</em> shows up in invariants
+          one can actually compute, and what happens when the usual hypotheses are
+          weakened.
+        </p>
+        <p>
+          Alongside the thesis I follow courses in the IMJ-PRG master's programme in
+          fundamental mathematics, mostly those touching contact geometry and Floer
+          homology.
+        </p>
+
+        <h3>Preprints and papers</h3>
+        <p>Nothing published yet. When there is, it will appear here with a link to the arXiv.</p>
+      </div>
+    </section>
+
+    <section id="events">
+      <span class="mono">Events</span>
+      <div class="body">
+        <h2>Events and conferences</h2>
+
+        <!-- ✏️ One <li> per event: name linked to its page, dates on the right. -->
+        <h3 class="subhead">Upcoming</h3>
+        <ul class="files">
+          <li><a class="link" href="https://example.org/event">[Event or conference name]</a><span class="when">[place] · [dates]</span></li>
+          <li><a class="link" href="https://example.org/event">[Summer school]</a><span class="when">[place] · [dates]</span></li>
+        </ul>
+
+        <!-- ✏️ Everything past stays folded away. -->
+        <div class="accordion">
+          <details>
+            <summary>Past events</summary>
+            <ul class="files">
+              <li><a class="link" href="https://example.org/event">[Event name]</a><span class="when">[place] · [dates]</span></li>
+              <li><a class="link" href="https://example.org/event">[Event name]</a><span class="when">[place] · [dates]</span></li>
+            </ul>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <section id="notes">
+      <span class="mono">Notes</span>
+      <div class="body">
+        <h2>Course and seminar notes</h2>
+        <p class="note">
+          Handwritten notes typed in LaTeX. They get corrected without warning — if
+          you spot a mistake, do write.
+        </p>
+        <!-- ✏️ Three groups. One <li> per document; keep the PDFs in this repository. -->
+        <div class="accordion">
+
+          <details open>
+            <summary>Courses</summary>
+            <ul class="entries">
+              <li>
+                <h3><a class="link" href="notes/characteristic-classes.pdf">Characteristic Classes</a></h3>
+                <span class="meta">Course by P. Georgieva · 12 lectures · PDF</span>
+                <p>Stiefel–Whitney, Chern and Pontryagin classes, with full proofs and a few added examples.</p>
+              </li>
+            </ul>
+          </details>
+
+          <details>
+            <summary>Topology and Geometry Seminar, IMJ-PRG</summary>
+            <ul class="entries">
+              <li>
+                <h3><a class="link" href="notes/imj-seminar.pdf">Notes, 2025–26</a></h3>
+                <span class="meta">Ongoing · PDF</span>
+                <p>Notes from the talks I attend, more or less as they were left on the board.</p>
+              </li>
+            </ul>
+          </details>
+
+          <details>
+            <summary>Symplectic Topology Working Group, Jussieu</summary>
+            <ul class="entries">
+              <li>
+                <h3><a class="link" href="notes/working-group.pdf">[Talk or topic]</a></h3>
+                <span class="meta">[Date] · PDF</span>
+                <p>[One line on what it covered.]</p>
+              </li>
+            </ul>
+          </details>
+
+        </div>
+      </div>
+    </section>
+
+    <section id="teaching">
+      <span class="mono">Teaching</span>
+      <div class="body">
+        <h2>Teaching</h2>
+        <p class="note">
+          Exercise sessions at Sorbonne Université. Sheets and solutions live inside
+          each course.
+        </p>
+
+        <!-- ✏️ Move a course from Current to Past when the term ends. -->
+        <h3 class="subhead">Current</h3>
+        <div class="accordion">
+          <details open>
+            <summary>
+              <span>[Course] &mdash; [Licence 1]
+                <span class="term">Spring 2026 · exercise sessions</span>
+              </span>
+            </summary>
+            <ul class="files">
+              <li><a class="link" href="teaching/2026-spring/sheet-1.pdf">Problem sheet 1</a><span class="when">solutions</span></li>
+              <li><a class="link" href="teaching/2026-spring/sheet-2.pdf">Problem sheet 2</a><span class="when">solutions</span></li>
+              <li><a class="link" href="teaching/2026-spring/notes.pdf">Session notes</a><span class="when">updated weekly</span></li>
+            </ul>
+          </details>
+        </div>
+
+        <!-- ✏️ Everything past stays folded away. Add one <details> per old course. -->
+        <div class="accordion">
+          <details>
+            <summary>Past courses</summary>
+            <div class="accordion">
+
+              <details>
+                <summary>
+                  <span>[Course] &mdash; [Licence 2]
+                    <span class="term">Autumn 2025 · exercise sessions</span>
+                  </span>
+                </summary>
+                <ul class="files">
+                  <li><a class="link" href="teaching/2025-autumn/sheets.pdf">All problem sheets</a><span class="when">PDF</span></li>
+                  <li><a class="link" href="teaching/2025-autumn/solutions.pdf">Solutions</a><span class="when">PDF</span></li>
+                </ul>
+              </details>
+
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <section id="other-writing">
+      <span class="mono">Other</span>
+      <div class="body">
+        <h2>Non-mathematical writing</h2>
+        <p class="note">
+          <!-- ✏️ One line on what this is, or delete this paragraph. -->
+          Things I write when I am not doing mathematics.
+        </p>
+        <!-- ✏️ One <li> per piece. Drop the <a> if there is nothing to link to yet. -->
+        <ul class="entries">
+          <li>
+            <h3><a class="link" href="writing/piece.pdf">[Title]</a></h3>
+            <span class="meta">[Where it appeared, if anywhere] · [year]</span>
+            <p>[One line on what it is about.]</p>
+          </li>
+          <li>
+            <h3>[Title]</h3>
+            <span class="meta">[Unpublished] · [year]</span>
+            <p>[One line on what it is about.]</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="contact">
+      <span class="mono">Contact</span>
+      <div class="body">
+        <h2>Where to find me</h2>
+        <div class="card">
+          <dl>
+            <dt>Email</dt>
+            <dd><a class="link" href="mailto:your.address@example.fr">your.address@example.fr</a></dd>
+            <dt>Office</dt>
+            <dd>[Corridor 15-16, office XXX]</dd>
+            <dt>Address</dt>
+            <dd>IMJ-PRG, Sorbonne Université<br>4 place Jussieu, 75005 Paris</dd>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <span>Luis Zegarra · Paris</span>
+    <span>Last updated: August 2026</span>
+  </footer>
+
+</div>
+</body>
+</html>
